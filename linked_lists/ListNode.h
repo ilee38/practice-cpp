@@ -4,15 +4,15 @@
 class ListNode{
 
 public:
-  ListNode(int, int *);
+  ListNode(int, ListNode *);
   ~ListNode();
   int get_value() const;
   void set_value(int);
-  int* get_next() const;
-  void set_next(int*);
+  ListNode * get_next() const;
+  void set_next(ListNode *);
 
 private:
   int val;
-  int *next;
+  ListNode *next;
 };
 #endif

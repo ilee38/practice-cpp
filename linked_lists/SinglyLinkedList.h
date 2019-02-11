@@ -15,15 +15,15 @@ public:
   int pop_front();           //removes item at the front and returns its value
   void push_back(int);
   int pop_back();           //removes item at the back and returns its value
-  int front();
-  int back();
+  int front() const;
+  int back() const;
   void insert(int, int);    //inserts element at index, so current item at index is now pointed to by inserted element
   void erase(int);          //deletes element at index
 
 private:
-  int *head;
-  int *tail;
-  int size;
+  ListNode head;
+  ListNode tail;
+  int size_;
 
 };
 #endif
