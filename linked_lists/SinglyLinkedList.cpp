@@ -11,7 +11,7 @@ int SinglyLinkedList::size() const{
 }
 
 bool SinglyLinkedList::empty() const{
-  if(size == 0)return true;
+  if(size_ == 0)return true;
   return false;
 }
 
@@ -19,19 +19,25 @@ int SinglyLinkedList::value_at(int index) const{
   if(index >= size_ || index < 0){
     throw std::invalid_argument("Index is out of bounds");
   }
-  ListNode item = head;
-  for(int i = 0; i < index; i++){
-    item = *item.get_next();
+  if(index == 0){
+    return head.get_value();
+  }else if(index == size_ - 1){
+    return tail.get_value();
+  }else{
+    ListNode item = head;
+    for(int i = 0; i < index; i++){
+      item = *item.get_next();
+    }
+    return item.get_value();
   }
-  return item.get_value();
 }
 
 void SinglyLinkedList::push_front(int val){
-  ListNode newNode = ListNode(val, &head);    //create new node w/next pointing to current head
+  ListNode newNode = ListNode(val, &head);    //create new node w/ next pointin to head
   head = newNode;
   if(size_ == 0){                 //if the list was empty, set the tail and head to the same element
-    head.set_next(nullptr);
     tail = newNode;
+    newNode.set_next(nullptr);
   }
   size_ ++;
 }
@@ -63,7 +69,7 @@ void SinglyLinkedList::push_back(int val){
 }
 
 int SinglyLinkedList::pop_back(){
-  if(size == 0){
+  if(size_ == 0){
     throw std::range_error("List is empty");
   }
   int retVal = tail.get_value();
@@ -124,6 +130,6 @@ void SinglyLinkedList::erase(int index){
     }
     ListNode toDelete = *item.get_next();
     item.set_next(toDelete.get_next());
+    size_--;
   }
-  size_--;
 }
