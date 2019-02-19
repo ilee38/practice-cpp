@@ -7,16 +7,19 @@
 
   ListQueue::ListQueue(): size(0), _head(nullptr), _tail(nullptr){}
 
-  ListQueue::~ListQueue(){}
+  ListQueue::~ListQueue(){
+    delete _head;
+    delete _tail;
+  }
 
   void ListQueue::enqueue(int val){
-    ListNode new_node = ListNode(val, nullptr);
+    ListNode *new_node = new ListNode(val, nullptr);
     if(size == 0){                  //if the queue is empty, set the new element
-      _head = &new_node;            //as head and tail
-      _tail = &new_node;
+      _head = new_node;            //as head and tail
+      _tail = new_node;
     }else{
-      _tail->set_next(&new_node);    //set current tail's next to new node first
-      _tail = &new_node;
+      _tail->set_next(new_node);    //set current tail's next to new node first
+      _tail = new_node;
     }
     size++;
   }

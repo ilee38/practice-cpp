@@ -14,5 +14,6 @@ public:
 private:
   int val;
   ListNode *next;
+
 };
 #endif
