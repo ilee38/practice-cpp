@@ -29,12 +29,14 @@
       throw std::range_error("Queue is empty");
     }
     int ret_val = _head->get_value();
-    if(size == 1){
-      _head = nullptr;
+    ListNode *tmp = _head;
+    if(size == 1){              //if only 1 element, set head and tail to nullptr
+      _head = nullptr;          //before deleting the element
       _tail = nullptr;
     }else{
       _head = _head->get_next();
     }
+    delete tmp;                 //delete element
     size--;
     return ret_val;
   }
