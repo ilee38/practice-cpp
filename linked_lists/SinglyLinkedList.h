@@ -21,8 +21,8 @@ public:
   void erase(int);          //deletes element at index
 
 private:
-  ListNode head;
-  ListNode tail;
+  ListNode *head;
+  ListNode *tail;
   int size_;
 
 };
