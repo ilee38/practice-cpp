@@ -16,7 +16,7 @@ HashTable::~HashTable(){
 
 /* Returns the index corresponding to the hash code of the given key */
 int HashTable::hash_(int key){
-  int hashCode = std::hash<int>{}(key);
+  int hashCode = std::hash<int>()(key);
   return abs(hashCode) % cap_;
 }
 
@@ -27,7 +27,7 @@ std::string HashTable::get(int key){
     int searchKey = table_[i].get_key();
     if(searchKey == key){
       return table_[i].get_value();
-    }else if(searchKey = -1 && table_[i].get_value() == "<empty>"){
+    }else if(searchKey == -1 && table_[i].get_value() == "<empty>"){
       throw std::invalid_argument("Key not found in table");
     }
     i = (i+1) % cap_;
