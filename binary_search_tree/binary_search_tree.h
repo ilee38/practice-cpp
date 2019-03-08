@@ -25,14 +25,14 @@ class BinarySearchTree{
     int getSuccessor();
 
   private:
-    int height_;
-    int nodeCount_;
     struct BSTNode_{
       int value;
-      BSTNode *left;
-      BSTNode *right;
-      BSTNode *parent;
+      BSTNode_ *left;
+      BSTNode_ *right;
+      BSTNode_ *parent;
     };
-
+    BSTNode_ *rootPtr;    //pointer to the root node
+    int height_;
+    int nodeCount_;
 };
 #endif
