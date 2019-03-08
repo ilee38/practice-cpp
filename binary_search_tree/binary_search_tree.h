@@ -20,19 +20,19 @@ class BinarySearchTree{
     BinarySearchTree();
     ~BinarySearchTree();
     void insert(int);
-    int getNodeCount() const;
-    void printValues() const;
-    void deleteTree();
-    bool isInTree() const;
-    int getHeight() const;
-    int getMin() const;
-    int getMax() const;
-    bool isBST() const;
+    int getNodeCount() const{ return nodeCount_; }
+    void printValues(BSTNode*) const;       //prints values from min to max
+    void deleteTree(BSTNode*);
+    bool isInTree(BSTNode*, int) const;
+    int getHeight(BSTNode*) const{ return height_; }
+    int getMin(BSTNode*) const;
+    int getMax(BSTNode*) const;
+    bool isBST(BSTNode*) const;
     void deleteValue(int);
     int getSuccessor(int);
 
   private:
-    BSTNode _createNewNode(int);
+    BSTNode* _createNewNode(int);
     BSTNode *rootPtr;    //pointer to the root node
     int height_;
     int nodeCount_;
