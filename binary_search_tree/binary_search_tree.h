@@ -9,6 +9,13 @@
 
 class BinarySearchTree{
 
+  struct BSTNode{
+    int value;
+    BSTNode *left;
+    BSTNode *right;
+    BSTNode *parent;
+  };
+
   public:
     BinarySearchTree();
     ~BinarySearchTree();
@@ -21,17 +28,12 @@ class BinarySearchTree{
     int getMin() const;
     int getMax() const;
     bool isBST() const;
-    void deleteValue();
-    int getSuccessor();
+    void deleteValue(int);
+    int getSuccessor(int);
 
   private:
-    struct BSTNode_{
-      int value;
-      BSTNode_ *left;
-      BSTNode_ *right;
-      BSTNode_ *parent;
-    };
-    BSTNode_ *rootPtr;    //pointer to the root node
+    BSTNode _createNewNode(int);
+    BSTNode *rootPtr;    //pointer to the root node
     int height_;
     int nodeCount_;
 };
