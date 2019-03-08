@@ -33,6 +33,7 @@ class BinarySearchTree{
 
   private:
     BSTNode* _createNewNode(int);
+    bool __isBST__(BSTNode*, std::queue<BSTNode*>) const;
     BSTNode *rootPtr;    //pointer to the root node
     int height_;
     int nodeCount_;

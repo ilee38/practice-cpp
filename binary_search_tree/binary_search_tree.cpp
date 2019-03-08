@@ -14,7 +14,7 @@ BinarySearchTree::BinarySearchTree(){
 
 
 BinarySearchTree::~BinarySearchTree(){
-  deleteTree();
+  deleteTree(rootPtr);
 }
 
 
@@ -134,16 +134,10 @@ int BinarySearchTree::getMax(BSTNode *node) const{
 
 
 /**
- * Returns true/false wether the tree is a Binary Search Tree.
- * Performs Breadth-First Search to visit all elements and checks
- * that each value meets the constraints of a BST.
+ * Called by isBST(), performs Breadth-First Search to visit all elements in the
+ * tree and checks that each value meets the constraints of a BST.
 */
-bool BinarySearchTree::isBST(BSTNode *root) const{
-  if(root == nullptr){
-    throw std::invalid_argument("Error: Tree is empty");
-  }
-  std::queue<BSTNode*> Q;
-  Q.push(root);
+bool BinarySearchTree::__isBST__(BSTNode *root, std::queue<BSTNode*> Q) const{
   if(root->left != nullptr){
     if(root->value > root->left->value){
       Q.push(root->left);
@@ -158,10 +152,23 @@ bool BinarySearchTree::isBST(BSTNode *root) const{
       return false;
     }
   }
-  Q.pop();
   if(Q.empty()){
     return true;
   }
   BSTNode *next = Q.front();
-  return isBST(next);
+  Q.pop();
+  return __isBST__(next, Q);
+}
+
+
+/**
+ * Returns true/false wether the tree is a Binary Search Tree.
+ * Uses helper function __isBST__()
+*/
+bool BinarySearchTree::isBST(BSTNode *root) const{
+  if(root == nullptr){
+    throw std::invalid_argument("Error: Tree is empty");
+  }
+  std::queue<BSTNode*> Q;
+  return __isBST__(root, Q);
 }
