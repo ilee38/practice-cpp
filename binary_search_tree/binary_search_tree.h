@@ -25,15 +25,16 @@ class BinarySearchTree{
     void deleteTree(BSTNode*);
     bool isInTree(BSTNode*, int) const;
     int getHeight(BSTNode*) const{ return height_; }
-    int getMin(BSTNode*) const;
-    int getMax(BSTNode*) const;
+    BSTNode* getMin(BSTNode*) const;
+    BSTNode* getMax(BSTNode*) const;
     bool isBST(BSTNode*) const;
-    void deleteValue(int);
+    BSTNode* deleteValue(BSTNode*, int);
     int getSuccessor(int);
 
   private:
     BSTNode* _createNewNode(int);
     bool __isBST__(BSTNode*, std::queue<BSTNode*>) const;
+
     BSTNode *rootPtr;    //pointer to the root node
     int height_;
     int nodeCount_;

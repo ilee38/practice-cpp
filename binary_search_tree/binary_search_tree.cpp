@@ -106,28 +106,28 @@ int BinarySearchTree::getHeight(BSTNode *node) const{
 
 
 /**
- * Returns the minimum value stored in the tree
+ * Returns the node with the minimum value stored in the tree
 */
-int BinarySearchTree::getMin(BSTNode *node) const{
+BinarySearchTree::BSTNode* BinarySearchTree::getMin(BSTNode *node) const{
   if(node == nullptr){
     throw std::invalid_argument("Error: Tree is empty");
   }
   if(node->left == nullptr){
-    return node->value;
+    return node;
   }
   return getMin(node->left);
 }
 
 
 /**
- * Returns the maximum value stored in the tree
+ * Returns the node with the maximum value stored in the tree
 */
-int BinarySearchTree::getMax(BSTNode *node) const{
+BinarySearchTree::BSTNode* BinarySearchTree::getMax(BSTNode *node) const{
   if(node == nullptr){
     throw std::invalid_argument("Error: Tree is empty");
   }
   if(node->right == nullptr){
-    return node->value;
+    return node;
   }
   return getMax(node->right);
 }
@@ -135,7 +135,8 @@ int BinarySearchTree::getMax(BSTNode *node) const{
 
 /**
  * Called by isBST(), performs Breadth-First Search to visit all elements in the
- * tree and checks that each value meets the constraints of a BST.
+ * tree and checks that each value meets the constraints of a BST. The function
+ * stops as soon as a value does not meet the properties of a BST and returns false.
 */
 bool BinarySearchTree::__isBST__(BSTNode *root, std::queue<BSTNode*> Q) const{
   if(root->left != nullptr){
@@ -171,4 +172,41 @@ bool BinarySearchTree::isBST(BSTNode *root) const{
   }
   std::queue<BSTNode*> Q;
   return __isBST__(root, Q);
+}
+
+
+BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int value){
+  //find the node in the tree
+  if(root = nullptr){return root;}
+  if(value < root->value) root->left = deleteValue(root->left, value);
+  else if(value > root->value) root->right = deleteValue(root->right, value);
+  else{     //value has been found!
+    //case 1 - no children (delete the node and set the parent's reference to it to nullptr)
+    if(root->left == nullptr && root->right == nullptr){
+      delete root;
+      root = nullptr;
+      return root;
+    }
+    //case 2 - only 1 child
+    else if(root->right == nullptr){
+      BSTNode *temp = root;
+      root = root->left;
+      delete temp;
+      return root;
+    }
+    else if(root->left == nullptr){
+      BSTNode *temp = root;
+      root = root->right;
+      delete temp;
+      return root;
+    }
+    //case 3 - two children (replace node with its predecessor, i.e. max node on left sub-tree)
+    //                      (find predecessor, exchange values, then delete the predecessor)
+    else{
+      BSTNode *predecessor = getMax(root->left);
+      root->value = predecessor->value;
+      root->left = deleteValue(predecessor, predecessor->value);
+      return root;
+    }
+  }
 }
