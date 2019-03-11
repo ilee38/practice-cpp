@@ -210,3 +210,41 @@ BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int valu
     }
   }
 }
+
+
+/**
+ * Returns the node with the succesor of the given value or nullptr if there's no successor.
+ * If the node has a right sub-tree, the successor is the min value of the node's right sub-tree
+ * Otherwise, we need to find the deepest ancestor of which this node is on its left sub-tree
+*/
+BinarySearchTree::BSTNode* BinarySearchTree::getSuccessor(BSTNode* root, int value) const{
+  if(root == nullptr){return root;}
+  //find the target node
+  BSTNode *current = root;
+  while(current != nullptr){
+    if(value == current->value)break;
+    else if(value < current->value){
+      current = current->left;
+    }else if(value > current->value){
+      current = current->right;
+    }
+  }
+  //case 1: the node has a right sub-tree
+  if(current->right != nullptr){
+    return getMin(current->right);
+  }
+  //case 2: the node has no right sub-tree
+  else{
+    BSTNode *succesor = nullptr;
+    BSTNode *ancestor = root;
+    while(ancestor != current){
+      if(current->value < ancestor->value){
+        succesor = ancestor;      //so far this is the deepest node of which current is on its left
+        ancestor = ancestor->left;  //but keep looking
+      }else{
+        ancestor = ancestor->right;   //the current node was on the right of the ancestor, so advance
+      }                               //and keep looking to the left
+    }
+    return succesor;
+  }
+}

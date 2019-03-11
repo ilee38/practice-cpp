@@ -29,7 +29,7 @@ class BinarySearchTree{
     BSTNode* getMax(BSTNode*) const;
     bool isBST(BSTNode*) const;
     BSTNode* deleteValue(BSTNode*, int);
-    int getSuccessor(int);
+    BSTNode* getSuccessor(BSTNode*, int) const;
 
   private:
     BSTNode* _createNewNode(int);
