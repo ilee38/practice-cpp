@@ -55,7 +55,6 @@ void BinarySearchTree::printValues(BSTNode *root) const{
   printValues(root->left);
   std::cout<<root->value <<" ";
   printValues(root->right);
-  std::cout<<std::endl;
 }
 
 
@@ -185,34 +184,27 @@ BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int valu
     if(root->left == nullptr && root->right == nullptr){
       delete root;
       root = nullptr;
-      nodeCount_--;
-      return root;
     }
     //case 2 - only 1 child
     else if(root->right == nullptr){
       BSTNode *temp = root;
       root = root->left;
       delete temp;
-      nodeCount_--;
-      return root;
     }
     else if(root->left == nullptr){
       BSTNode *temp = root;
       root = root->right;
       delete temp;
-      nodeCount_--;
-      return root;
     }
     //case 3 - two children (replace node with its predecessor, i.e. max node on left sub-tree)
     //                      (find predecessor, exchange values, then delete the predecessor)
     else{
       BSTNode *predecessor = getMax(root->left);
       root->value = predecessor->value;
-      root->left = deleteValue(predecessor, predecessor->value);
-      nodeCount_--;
-      return root;
+      root->left = deleteValue(root->left, predecessor->value);
     }
   }
+  return root;
 }
 
 

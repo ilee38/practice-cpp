@@ -40,6 +40,7 @@ int main(){
   }
   std::cout<< "Printing node values in order...\n";
   bst.printValues(root);
+  std::cout<<std::endl;
   std::cout<<"The minimum value in the BST is: " <<bst.getMin(root)->value <<"\n";
   std::cout<<"The maximum value in the BST is: " <<bst.getMax(root)->value <<"\n";
   std::cout<<"Tree's height is: " <<bst.getHeight(root) <<"\n";
@@ -54,10 +55,13 @@ int main(){
   std::cout<< "deleting 6...\n";
   bst.deleteValue(root, 6);
   bst.printValues(root);
+  std::cout<<std::endl;
   std::cout<< "deleting 12...\n";
   bst.deleteValue(root, 12);
   bst.printValues(root);
+  std::cout<<std::endl;
   std::cout<< "deleting 20...\n";
   bst.deleteValue(root, 20);
   bst.printValues(root);
+  std::cout<<std::endl;
 }
