@@ -8,12 +8,6 @@
 
 BinarySearchTree::BinarySearchTree(){
   rootPtr = nullptr;
-  nodeCount_ = 0;
-}
-
-
-BinarySearchTree::~BinarySearchTree(){
-  deleteTree(rootPtr);
 }
 
 
@@ -41,7 +35,6 @@ BinarySearchTree::BSTNode* BinarySearchTree::insert(BSTNode *node, int val){
   }else if(val > node->value){
     node->right = insert(node->right, val);
   }
-  nodeCount_++;
   return node;
 }
 

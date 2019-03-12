@@ -31,7 +31,6 @@ int main(){
   std::cout<<"created node with value 16\n";
   root = bst.insert(root, 27);
   std::cout<<"created node with value 27\n";
-  std::cout<< "Current number of nodes: " <<bst.getNodeCount() <<"\n";
   std::cout<< "Is current tree a BST?\n";
   if(bst.isBST(root)){
     std::cout<<"yes\n";
@@ -64,4 +63,6 @@ int main(){
   bst.deleteValue(root, 20);
   bst.printValues(root);
   std::cout<<std::endl;
+
+  bst.deleteTree(root);
 }

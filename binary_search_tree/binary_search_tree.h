@@ -17,9 +17,7 @@ class BinarySearchTree{
     };
 
     BinarySearchTree();
-    ~BinarySearchTree();
     BSTNode* insert(BSTNode*, int);
-    int getNodeCount() const{ return nodeCount_; }
     void printValues(BSTNode*) const;       //prints values from min to max
     void deleteTree(BSTNode*);
     bool isInTree(BSTNode*, int) const;
@@ -35,7 +33,5 @@ class BinarySearchTree{
     bool __isBST__(BSTNode*, std::queue<BSTNode*>) const;
 
     BSTNode *rootPtr;    //pointer to the root node
-    int height_;
-    int nodeCount_;
 };
 #endif
