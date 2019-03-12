@@ -83,8 +83,11 @@ bool BinarySearchTree::isInTree(BSTNode *root, int value) const{
   if(root->value == value){
     return true;
   }
-  if(value < root->value){isInTree(root->left, value);}
-  if(value > root->value){isInTree(root->right, value);}
+  if(value < root->value){
+    return isInTree(root->left, value);
+  }else if(value > root->value){
+    return isInTree(root->right, value);
+  }
 }
 
 
