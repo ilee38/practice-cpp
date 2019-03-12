@@ -9,22 +9,21 @@
 
 class BinarySearchTree{
 
-  struct BSTNode{
-    int value;
-    BSTNode *left;
-    BSTNode *right;
-    BSTNode *parent;
-  };
-
   public:
+    struct BSTNode{
+      int value;
+      BSTNode *left;
+      BSTNode *right;
+    };
+
     BinarySearchTree();
     ~BinarySearchTree();
-    void insert(int);
+    BSTNode* insert(BSTNode*, int);
     int getNodeCount() const{ return nodeCount_; }
     void printValues(BSTNode*) const;       //prints values from min to max
     void deleteTree(BSTNode*);
     bool isInTree(BSTNode*, int) const;
-    int getHeight(BSTNode*) const{ return height_; }
+    int getHeight(BSTNode*) const;
     BSTNode* getMin(BSTNode*) const;
     BSTNode* getMax(BSTNode*) const;
     bool isBST(BSTNode*) const;

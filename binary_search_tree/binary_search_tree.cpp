@@ -8,7 +8,6 @@
 
 BinarySearchTree::BinarySearchTree(){
   rootPtr = nullptr;
-  height_ = 0;
   nodeCount_ = 0;
 }
 
@@ -23,31 +22,27 @@ BinarySearchTree::BSTNode* BinarySearchTree::_createNewNode(int val){
   newNode->value = val;
   newNode->left = nullptr;
   newNode->right = nullptr;
-  newNode->parent = nullptr;
   return newNode;
 }
 
 
 /*
- * Inserts new node in the tree
+ * Inserts new node in the tree. Returns a pointer to the root node
+ * of the tree.
 */
-void BinarySearchTree::insert(int val){
-  BSTNode *newElement = _createNewNode(val);
-  if(rootPtr == nullptr){
-    rootPtr = newElement;
-  }else{
-    BSTNode *current = rootPtr;
-    while(current != nullptr){
-      if(newElement->value < current->value){
-        current = current->left;
-      }
-      if(newElement->value > current->value){
-        current = current->right;
-      }
-    }
-    current = newElement;
-    nodeCount_++;
+BinarySearchTree::BSTNode* BinarySearchTree::insert(BSTNode *node, int val){
+
+  if(node == nullptr){
+    node = _createNewNode(val);
+    return node;
   }
+  if(val < node->value){
+    node->left = insert(node->left, val);
+  }else if(val > node->value){
+    node->right = insert(node->right, val);
+  }
+  nodeCount_++;
+  return node;
 }
 
 
@@ -58,8 +53,9 @@ void BinarySearchTree::insert(int val){
 void BinarySearchTree::printValues(BSTNode *root) const{
   if(root == nullptr){ return; }
   printValues(root->left);
-  std::cout<<root->value <<"\n";
+  std::cout<<root->value <<" ";
   printValues(root->right);
+  std::cout<<std::endl;
 }
 
 
@@ -79,15 +75,16 @@ void BinarySearchTree::deleteTree(BSTNode *root){
 
 
 /**
- * Returns true/false if the value is in the tree
+ * Returns true/false if the value is in the tree.
+ * Starts from the root of the tree.
 */
-bool BinarySearchTree::isInTree(BSTNode *node, int value) const{
-  if(node == nullptr){return false;}
-  if(node->value == value){
+bool BinarySearchTree::isInTree(BSTNode *root, int value) const{
+  if(root == nullptr){return false;}
+  if(root->value == value){
     return true;
   }
-  if(value < node->value){isInTree(node->left, value);}
-  if(value > node->value){isInTree(node->right, value);}
+  if(value < root->value){isInTree(root->left, value);}
+  if(value > root->value){isInTree(root->right, value);}
 }
 
 
@@ -177,7 +174,7 @@ bool BinarySearchTree::isBST(BSTNode *root) const{
 
 BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int value){
   //find the node in the tree
-  if(root = nullptr){return root;}
+  if(root == nullptr){return root;}
   if(value < root->value) root->left = deleteValue(root->left, value);
   else if(value > root->value) root->right = deleteValue(root->right, value);
   else{     //value has been found!
@@ -185,6 +182,7 @@ BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int valu
     if(root->left == nullptr && root->right == nullptr){
       delete root;
       root = nullptr;
+      nodeCount_--;
       return root;
     }
     //case 2 - only 1 child
@@ -192,12 +190,14 @@ BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int valu
       BSTNode *temp = root;
       root = root->left;
       delete temp;
+      nodeCount_--;
       return root;
     }
     else if(root->left == nullptr){
       BSTNode *temp = root;
       root = root->right;
       delete temp;
+      nodeCount_--;
       return root;
     }
     //case 3 - two children (replace node with its predecessor, i.e. max node on left sub-tree)
@@ -206,6 +206,7 @@ BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int valu
       BSTNode *predecessor = getMax(root->left);
       root->value = predecessor->value;
       root->left = deleteValue(predecessor, predecessor->value);
+      nodeCount_--;
       return root;
     }
   }
@@ -218,7 +219,7 @@ BinarySearchTree::BSTNode* BinarySearchTree::deleteValue(BSTNode *root, int valu
  * Otherwise, we need to find the deepest ancestor of which this node is on its left sub-tree
 */
 BinarySearchTree::BSTNode* BinarySearchTree::getSuccessor(BSTNode* root, int value) const{
-  if(root == nullptr){return root;}
+  if(root == nullptr || (root->left == nullptr && root->right == nullptr)){return root;}
   //find the target node
   BSTNode *current = root;
   while(current != nullptr){
