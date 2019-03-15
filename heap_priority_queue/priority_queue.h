@@ -1,6 +1,6 @@
 /**
  * Definition of PriorityQueue class, implemented using
- * a Heap data structure represented with an underlying array
+ * a max Heap data structure represented with an underlying array
 */
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
@@ -17,22 +17,22 @@ class PriorityQueue{
       std::string value;
     };
 
-    PriorityQueue();
+    PriorityQueue(int);
     ~PriorityQueue();
-    void insert(HeapNode*);
-    int get_max() const;
+    void insert(int, std::string);
+    HeapNode get_max() const;
     int get_size() const;
     bool is_empty() const;
-    int extract_max();
+    HeapNode extract_max();
     void remove(int);
     void heapify();
     void heap_sort();
 
   private:
-    void sift_up(HeapNode*);
-    void sift_down(HeapNode*);
-    int _capacity;
-    int _size;
-    HeapNode* PQ_data;    //pointer to array of HeapNode pointers
+    void _sift_up(int);
+    void _sift_down(HeapNode*);
+    int _capacity;        //capacity of the array
+    int _size;            //number of elements in the priority queue
+    HeapNode* _PQ_data;   //pointer to array of HeapNode pointers
 };
 #endif
