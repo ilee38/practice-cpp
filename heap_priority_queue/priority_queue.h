@@ -25,14 +25,15 @@ class PriorityQueue{
     bool is_empty() const;
     HeapNode extract_max();
     void remove(int);
-    void heapify();
-    void heap_sort();
+    void heapify(int*, int);
+    void heap_sort(int*, int);
 
   private:
     void _sift_up(int);
-    void _sift_down(HeapNode*);
-    int _capacity;        //capacity of the array
-    int _size;            //number of elements in the priority queue
-    HeapNode* _PQ_data;   //pointer to array of HeapNode pointers
+    void _sift_down(int);
+    void _sift_down(int*, int, int);    //overloaded to work with heapify() function
+    int _capacity;                      //capacity of the array
+    int _size;                          //number of elements in the priority queue
+    HeapNode* _PQ_data;                 //pointer to array of HeapNode pointers
 };
 #endif
