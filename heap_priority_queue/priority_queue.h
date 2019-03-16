@@ -34,6 +34,6 @@ class PriorityQueue{
     void _sift_down(int*, int, int);    //overloaded to work with heapify() function
     int _capacity;                      //capacity of the array
     int _size;                          //number of elements in the priority queue
-    HeapNode* _PQ_data;                 //pointer to array of HeapNode pointers
+    HeapNode* _PQ_data;                 //pointer to array of HeapNode elements
 };
 #endif

@@ -22,6 +22,9 @@ PriorityQueue::~PriorityQueue(){
  * 2. sift up the element to fix the heap (if needed)
 */
 void PriorityQueue::insert(int key, std::string value){
+  if(_size == _capacity){
+    throw std::invalid_argument("Error: queue is full");
+  }
   _PQ_data[_size].key = key;
   _PQ_data[_size].value = value;
   _size++;
@@ -96,7 +99,7 @@ PriorityQueue::HeapNode PriorityQueue::extract_max(){
  * 2. Continue until reaching the end of the Heap.
 */
 void PriorityQueue::_sift_down(int pos){
-  if(pos >= _size - 1)return;
+  if((2*pos + 1) >= _size)return;
   int max_pos = pos;
   int l_child = 2*pos + 1;
   int r_child = 2*pos + 2;
@@ -149,7 +152,7 @@ void PriorityQueue::heapify(int *list, int count){
  * Performs in-place heap-sort algorithm on an array of elements.
  * 1. Make the array a Max Heap
  * 2. Since the max element is always at the top, we swap the first and last
- * elements in the array (n-1) times.
+ * elements in the array (n-1) times. (this puts the max element at the end of the array)
  * 3. Each time we swap the elements, we "decrease" the array's size and call sift_down.
  *
  * Parameters:
@@ -157,13 +160,15 @@ void PriorityQueue::heapify(int *list, int count){
  * conut = number of elements in the array
 */
 void PriorityQueue::heap_sort(int* list, int count){
-  if(count <= 1)return;
-  int temp = list[count - 1];
-  list[count - 1] = list[0];
-  list[0] = temp;
-  count--;
-  _sift_down(list, 0, count);
-  heap_sort(list, count);
+  int temp;
+  heapify(list, count);
+  for(int i = count - 1; i > 0; i--){
+    temp = list[i];
+    list[i] = list[0];
+    list[0] = temp;
+
+    _sift_down(list, 0, i);
+  }
 }
 
 
@@ -173,7 +178,7 @@ void PriorityQueue::heap_sort(int* list, int count){
  * the number of elements in the array)
 */
 void PriorityQueue::_sift_down(int* arr, int pos, int size){
-  if(pos >= size - 1)return;
+  if((2*pos + 1) > size)return;
   int max_pos = pos;
   int l_child = 2*pos + 1;
   int r_child = 2*pos + 2;
