@@ -53,7 +53,7 @@ void PriorityQueue::_sift_up(int pos){
 
 
 /**
- * Returns the element with the maximum value in the
+ * Returns the element (w/out removing it) with the maximum value in the
  * priority queue. I.e. the element at the top of the heap.
 */
 PriorityQueue::HeapNode PriorityQueue::get_max() const{
@@ -134,7 +134,7 @@ void PriorityQueue::remove(int index){
 
 /**
  * Creates a Heap from an array of elements. Needed for heap sort.
- * 1. Start from the first non-leaf node (i.e. position (n/2)-1) going up.
+ * 1. Start from the first non-leaf node (i.e. position [(n-1)/2]-1) going up.
  * 2. Call sift_down() for each of these nodes.
  *
  * Parameters:
@@ -142,7 +142,7 @@ void PriorityQueue::remove(int index){
  * conut = number of elements in the array
 */
 void PriorityQueue::heapify(int *list, int count){
-  for(int i = count/2 - 1; i >= 0; i--){
+  for(int i = (count - 1)/2 - 1; i >= 0; i--){
     _sift_down(list, i, count);
   }
 }
@@ -166,8 +166,8 @@ void PriorityQueue::heap_sort(int* list, int count){
     temp = list[i];
     list[i] = list[0];
     list[0] = temp;
-
-    _sift_down(list, 0, i);
+    //before calling sift_down, "decrease" the array size (i.e. the last index is now i-1)
+    _sift_down(list, 0, i-1);
   }
 }
 
