@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <queue>
 
 class DirectedGraph{
 
@@ -11,8 +12,6 @@ class DirectedGraph{
 
     struct vertex{
       std::string element;
-      //std::vector<struct edge*> incident_out;    //list of incident outgoing edges
-      //std::vector<struct edge*> incident_in;     //list of incident incoming edges
       bool explored = false;
     };
 
@@ -31,7 +30,7 @@ class DirectedGraph{
     vertex* insert_vertex(std::string);
     edge* insert_edge(vertex*, vertex*, int);
 
-    std::vector<vertex> DFS();
+    //std::vector<vertex> DFS();
     std::vector<vertex> BFS();
 
   private:

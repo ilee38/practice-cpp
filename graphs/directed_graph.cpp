@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 #include "directed_graph.h"
 
 DirectedGraph::DirectedGraph():_vertex_count(0), _edge_count(0){}
