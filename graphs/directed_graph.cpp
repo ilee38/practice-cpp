@@ -4,12 +4,10 @@
 */
 #include <iostream>
 #include <vector>
+#include <queue>
 #include "directed_graph.h"
 
-DirectedGraph::DirectedGraph(){
-  vertex_count = 0;
-  edge_count = 0;
-}
+DirectedGraph::DirectedGraph():_vertex_count(0), _edge_count(0){}
 
 
 DirectedGraph::~DirectedGraph(){}
@@ -17,61 +15,77 @@ DirectedGraph::~DirectedGraph(){}
 
 /*Returns the number of vertices in the graph*/
 int DirectedGraph::vertex_count(){
-  return vertex_count;
+  return _vertex_count;
 }
 
 
 /*Returns the number of edges in the graph*/
 int DirectedGraph::edge_count(){
-  return edge_count;
+  return _edge_count;
 }
 
 
 /*Returns the edge from vertex u to vertex v if one exists*/
-edge* DirectedGraph::get_edge(vertex *u, vertex *v){
-  for(int i = 0; i < u->incident_out.size()-1; i++){
-    if(u->incident_out[i]->destination == v)return u->incident_out[i];
+DirectedGraph::edge* DirectedGraph::get_edge(DirectedGraph::vertex *u, DirectedGraph::vertex *v){
+  for(int i = 0; i < Adj_list[u].size()-1; i++){
+    if(Adj_list[u][i].element == v->element){
+      edge e;
+      e.origin = u;
+      e.destination = v;
+      return &e;
+    }
   }
 }
 
 
 /*Returns the number of outgoing edges incident to vertex v*/
 int DirectedGraph::degree(vertex *v){
-  return v->incident_out.size();
+  return Adj_list[v].size();
 }
 
 
 /*Creates and returns a new vertex storing element x*/
-vertex* DirectedGraph::insert_vertex(std::string x){
-  vertex new_vertex = {x};
-  Adj_list.push_back(&new_vertex);
-  vertex_count++;
+DirectedGraph::vertex* DirectedGraph::insert_vertex(std::string x){
+  vertex new_vertex;
+  new_vertex.element = x;
+  std::vector<vertex> adj;
+  Adj_list.insert(make_pair(&new_vertex, adj));
+  _vertex_count++;
   return &new_vertex;
 }
 
 
 /*Creates and returns a new edge from vertex u to vertex v, and weight w*/
-edge* DirectedGraph::insert_edge(vertex *u, vertex *v, int w){
-  edge new_edge = {w, u, v};
-  u->incident_out.push_back(&new_edge);
-  v->incident_in.push_back(&new_edge);
-  edge_count++;
+DirectedGraph::edge* DirectedGraph::insert_edge(DirectedGraph::vertex *u, DirectedGraph::vertex *v, int w){
+  edge new_edge;
+  new_edge.weight = w;
+  new_edge.origin = u;
+  new_edge.destination = v;
+  Adj_list[u].push_back(*v);
+  _edge_count++;
   return &new_edge;
 }
 
 
-/*Removes vertex v and all its incident edges from the graph*/
-void DirectedGraph::remove_vertex(vertex *v){
-  for(int i = 0; i < v.incident_in.size()-1; i++){
-    remove_edge(v.incident_in[i]);      //remove any incoming edge
+/*Returns an array for vertices corresponding to the BFS order*/
+std::vector<DirectedGraph::vertex> DirectedGraph::BFS(){
+  std::vector<DirectedGraph::vertex> V;
+  std::queue<DirectedGraph::vertex> Q;
+  for(auto v : Adj_list){    //traverse Adj list
+    if(!(v.first->explored)){
+      v.first->explored = true;
+      Q.push(*v.first);
+      for(int i = 0; i < v.second.size(); i++){
+        if(!(v.second[i].explored)){
+          v.second[i].explored = true;
+          Q.push(v.second[i]);
+        }
+      }
+    }
   }
-  vertex_count--;
-  Adj_list.erase(v);
-}
-
-
-/*Remove edge e from the graph*/
-void DirectedGraph::remove_edge(edge *e){
-  delete e;
-  edge_count--;
+  while(!Q.empty()){
+    V.push_back(Q.front());
+    Q.pop();
+  }
+  return V;
 }
