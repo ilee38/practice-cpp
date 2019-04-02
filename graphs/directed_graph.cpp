@@ -50,7 +50,7 @@ DirectedGraph::vertex DirectedGraph::insert_vertex(std::string x){
   DirectedGraph::vertex new_vertex;
   new_vertex.element = x;
   std::vector<vertex> adj;
-  Adj_list.insert(make_pair(&new_vertex, adj));
+  Adj_list.insert(make_pair(new_vertex, adj));
   _vertex_count++;
   return new_vertex;
 }
@@ -62,7 +62,7 @@ DirectedGraph::edge DirectedGraph::insert_edge(DirectedGraph::vertex *u, Directe
   new_edge.weight = w;
   new_edge.origin = u;
   new_edge.destination = v;
-  Adj_list[u].push_back(*v);
+  Adj_list[*u].push_back(*v);
   _edge_count++;
   return new_edge;
 }
@@ -73,20 +73,22 @@ std::vector<DirectedGraph::vertex> DirectedGraph::BFS(){
   std::vector<DirectedGraph::vertex> V;
   std::queue<DirectedGraph::vertex> Q;
   for(auto v : Adj_list){    //traverse Adj list
-    if(!(v.first->explored)){
-      v.first->explored = true;
-      Q.push(*v.first);
-      for(int i = 0; i < v.second.size(); i++){
-        if(!(v.second[i].explored)){
-          v.second[i].explored = true;
-          Q.push(v.second[i]);
+    if(!(v.first.explored)){
+      v.first.explored = true;
+      Q.push(v.first);
+      for(auto vertex : v.second){
+        if(!(vertex.explored)){
+          vertex.explored = true;
+          Q.push(vertex);
         }
       }
     }
-  }
-  while(!Q.empty()){
     V.push_back(Q.front());
     Q.pop();
   }
+  /*while(!Q.empty()){
+    V.push_back(Q.front());
+    Q.pop();
+  }*/
   return V;
 }

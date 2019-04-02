@@ -34,7 +34,7 @@ class DirectedGraph{
     std::vector<vertex> BFS();
 
   private:
-    std::unordered_map<vertex*, std::vector<vertex> > Adj_list;   //Adjacency list for the graph, containing the collection of Vertices
+    std::unordered_map<vertex, std::vector<vertex> > Adj_list;   //Adjacency list for the graph, containing the collection of Vertices
     int _vertex_count;
     int _edge_count;
 };

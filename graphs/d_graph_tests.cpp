@@ -25,6 +25,8 @@ int main(){
   DirectedGraph::edge W_B = DG.insert_edge(&W, &B, 0);
 
   std::vector<DirectedGraph::vertex> BFS_order = DG.BFS();
+
+  /*Print vertices in BFS order*/
   for(auto vertex : BFS_order){
     std::cout<<vertex.element <<", ";
   }
