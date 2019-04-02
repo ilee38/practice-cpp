@@ -17,18 +17,18 @@ class DirectedGraph{
 
     struct edge{
       int weight = 0;
-      vertex *origin = nullptr;
-      vertex *destination = nullptr;
+      struct vertex *origin = nullptr;
+      struct vertex *destination = nullptr;
     };
 
     DirectedGraph();
     ~DirectedGraph();
     int vertex_count();
     int edge_count();
-    edge* get_edge(vertex*, vertex*);
-    int degree(vertex*);
-    vertex* insert_vertex(std::string);
-    edge* insert_edge(vertex*, vertex*, int);
+    //edge get_edge(vertex*, vertex*);
+    //int degree(vertex*);
+    vertex insert_vertex(std::string);
+    edge insert_edge(vertex*, vertex*, int);
 
     //std::vector<vertex> DFS();
     std::vector<vertex> BFS();

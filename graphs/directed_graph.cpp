@@ -27,44 +27,44 @@ int DirectedGraph::edge_count(){
 
 
 /*Returns the edge from vertex u to vertex v if one exists*/
-DirectedGraph::edge* DirectedGraph::get_edge(DirectedGraph::vertex *u, DirectedGraph::vertex *v){
+/*DirectedGraph::edge DirectedGraph::get_edge(DirectedGraph::vertex *u, DirectedGraph::vertex *v){
   for(int i = 0; i < Adj_list[u].size()-1; i++){
     if(Adj_list[u][i].element == v->element){
       edge e;
       e.origin = u;
       e.destination = v;
-      return &e;
+      return e;
     }
   }
-}
+} */
 
 
 /*Returns the number of outgoing edges incident to vertex v*/
-int DirectedGraph::degree(vertex *v){
+/*int DirectedGraph::degree(vertex *v){
   return Adj_list[v].size();
-}
+} */
 
 
 /*Creates and returns a new vertex storing element x*/
-DirectedGraph::vertex* DirectedGraph::insert_vertex(std::string x){
-  vertex new_vertex;
+DirectedGraph::vertex DirectedGraph::insert_vertex(std::string x){
+  DirectedGraph::vertex new_vertex;
   new_vertex.element = x;
   std::vector<vertex> adj;
   Adj_list.insert(make_pair(&new_vertex, adj));
   _vertex_count++;
-  return &new_vertex;
+  return new_vertex;
 }
 
 
 /*Creates and returns a new edge from vertex u to vertex v, and weight w*/
-DirectedGraph::edge* DirectedGraph::insert_edge(DirectedGraph::vertex *u, DirectedGraph::vertex *v, int w){
+DirectedGraph::edge DirectedGraph::insert_edge(DirectedGraph::vertex *u, DirectedGraph::vertex *v, int w){
   edge new_edge;
   new_edge.weight = w;
   new_edge.origin = u;
   new_edge.destination = v;
   Adj_list[u].push_back(*v);
   _edge_count++;
-  return &new_edge;
+  return new_edge;
 }
 
 
